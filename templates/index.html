@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Predictor</title>
+    <style>
+        :root {
+            --bg-1: #f5f7ff;
+            --bg-2: #e3ecff;
+            --card: #ffffff;
+            --primary: #0d5bd8;
+            --primary-dark: #0847ad;
+            --text: #10203a;
+            --muted: #5a6b8c;
+            --error-bg: #ffe9e9;
+            --error-text: #9f1e1e;
+            --success-bg: #eaf8ef;
+            --success-text: #1d5b35;
+            --border: #d6def0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            background: radial-gradient(circle at top left, var(--bg-2), var(--bg-1));
+            color: var(--text);
+            padding: 20px;
+        }
+
+        .card {
+            width: min(560px, 100%);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 18px 45px rgba(16, 32, 58, 0.12);
+            padding: 28px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            letter-spacing: 0.2px;
+        }
+
+        p {
+            margin: 0 0 20px;
+            color: var(--muted);
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 91, 216, 0.15);
+        }
+
+        button {
+            margin-top: 4px;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, var(--primary), #3f85f6);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, background 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            background: linear-gradient(135deg, var(--primary-dark), #2d74e8);
+        }
+
+        .alert {
+            margin-top: 16px;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-weight: 600;
+        }
+
+        .alert.error {
+            background: var(--error-bg);
+            color: var(--error-text);
+        }
+
+        .alert.success {
+            background: var(--success-bg);
+            color: var(--success-text);
+        }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <h1>House Price Prediction</h1>
+        <p>Enter the house area in square feet to estimate the price using your trained linear regression model.</p>
+
+        <form method="POST" action="/">
+            <label for="sqft">Square Feet (sqft)</label>
+            <input
+                type="number"
+                id="sqft"
+                name="sqft"
+                placeholder="Example: 1750"
+                min="1"
+                step="any"
+                required
+                value="{{ sqft_value }}"
+            >
+            <button type="submit">Predict Price</button>
+        </form>
+
+        {% if prediction %}
+            <div class="alert success">Predicted Price: {{ prediction }}</div>
+        {% endif %}
+
+        {% if error %}
+            <div class="alert error">{{ error }}</div>
+        {% endif %}
+    </main>
+</body>
+</html>

@@ -87,7 +87,3 @@ python app.py
 - Add multiple features (bedrooms, bathrooms, location)
 - Add API endpoint for JSON predictions
 - Add Docker support for easy deployment
-
-## License
-
-You can add your preferred license here (for example, MIT).
